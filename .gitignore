@@ -293,3 +293,9 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+IntSharp/IntSharp.csproj.DotSettings
+IntSharp/IntSharp.dll
+IntSharp/MathNet.Numerics.dll
+IntSharp/MathNet.Numerics.xml
+IntSharpTests/IntSharpTests.csproj.DotSettings
+IntSharpTests/LinearEquationSystem/LinearEquationSystemTests.cs.orig
