@@ -3,6 +3,9 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace IntSharp.Types
 {
+    /// <summary>
+    /// Common matrix implementation for the interval type
+    /// </summary>
     public struct IntervalMatrix
     {
         // Todo: add constants (zero, entire, ...).

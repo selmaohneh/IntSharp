@@ -5,6 +5,9 @@ using IntSharp.Types;
 
 namespace IntSharp
 {
+    /// <summary>
+    /// Class that implements common mathematically functions
+    /// </summary>
     public static class Math
     {
         // Todo: add argument reduction for sin/cos (binary calculations).

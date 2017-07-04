@@ -2,6 +2,9 @@
 
 namespace IntSharp.LinearEquationSystem
 {
+    /// <summary>
+    /// Class for solving an overdetermined linear equation system of type A*x=b
+    /// </summary>
     internal static class OverDetermined
     {
         /// <summary>

@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IntSharp.Types
 {
+    /// <summary>
+    /// Base type for the whole library
+    /// </summary>
     public struct Interval
     {
         /// <summary>

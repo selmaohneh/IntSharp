@@ -5,6 +5,9 @@ using IntSharp.Types;
 
 namespace IntSharp
 {
+    /// <summary>
+    /// Class for solving global optimization problems.
+    /// </summary>
     public static class Optimization
     {
         // ToDo: Don't throw exception if search box causes DividedByZero, maybe just discard? Add test afterwards!

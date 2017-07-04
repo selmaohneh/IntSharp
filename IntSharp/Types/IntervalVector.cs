@@ -4,6 +4,9 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace IntSharp.Types
 {
+    /// <summary>
+    /// Common vector implementation for the interval type
+    /// </summary>
     public struct IntervalVector
     {
         /// <summary>

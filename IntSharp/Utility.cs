@@ -5,6 +5,9 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace IntSharp
 {
+    /// <summary>
+    /// Contains multiple convinience methods for using the interval type
+    /// </summary>
     public static class Utility
     {
         // Todo: add more support for matrix/vector

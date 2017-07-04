@@ -3,10 +3,13 @@ using IntSharp.Types;
 
 namespace IntSharp.LinearEquationSystem
 {
+    /// <summary>
+    /// Class for solving a linear equation system of type A*x = b.
+    /// </summary>
     public static class LinearEquationSystem
     {
         /// <summary>
-        /// Solves the given linear equation system A*x = b.
+        /// Starting point for solving any equation system. Checks the solvability and calls corresponding sub class.
         /// When using error weighting each line of the equation system gets scaled by a weight resulting from its accuracy.
         /// This requires two full equation system solvings. The first one to aquire the corresponding weights, the second one to calculate
         /// the results of the weighted system.

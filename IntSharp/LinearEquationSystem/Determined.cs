@@ -4,6 +4,9 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace IntSharp.LinearEquationSystem
 {
+    /// <summary>
+    /// Class for solving a determined linear equation system of type A*x=b
+    /// </summary>
     internal static class Determined
     {
         /// <summary>

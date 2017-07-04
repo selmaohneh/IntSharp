@@ -7,7 +7,7 @@ namespace IntSharp
     /// If for example an operation's result would be 0.99999999999999999999 it will be rounded to 1 due to an double overflow. 
     /// Using the inflation algorithm below, the value gets enclosed rigorously! 
     /// The need of an inflation after each arithmetic operation is inevitable since C#/.NET has no option
-    /// to switch the compiler rounding mode dynamically (like C has). 
+    /// to switch the rounding mode dynamically (like C has). 
     /// </summary>
     public static class Inflation
     {

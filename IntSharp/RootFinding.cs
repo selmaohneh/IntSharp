@@ -4,6 +4,9 @@ using MathNet.Numerics;
 
 namespace IntSharp
 {
+    /// <summary>
+    /// Class for finding roots of a function f.
+    /// </summary>
     public static class RootFinding
     {
         /// <summary>
