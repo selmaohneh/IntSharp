@@ -9,33 +9,33 @@ namespace IntSharpTests
         [Test]
         public void InflateDownTest()
         {
-            var a = double.MaxValue;
-            var inflatedValue = a.InflateDown();
-            Assert.Greater(a,inflatedValue);
+            var testValue = double.MaxValue;
+            var inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue,inflatedValue);
 
-            a = double.MinValue;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = double.MinValue;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
 
-            a = 0.0;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = 0.0;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
 
-            a = 0.99999999999999999999999999;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = 0.99999999999999999999999999;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
 
-            a = 0.33333333333333333333333333;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = 0.33333333333333333333333333;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
 
-            a = -0.99999999999999999999999999;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = -0.99999999999999999999999999;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
 
-            a = -0.33333333333333333333333333;
-            inflatedValue = a.InflateDown();
-            Assert.Greater(a, inflatedValue);
+            testValue = -0.33333333333333333333333333;
+            inflatedValue = testValue.InflateDown();
+            Assert.Greater(testValue, inflatedValue);
         }
         
         [Test]
