@@ -90,13 +90,13 @@ namespace IntSharpTests
             {
                400*Math.Pown(x.Items[0],3)+(2-400*x.Items[1])*x.Items[0]-2,
                200*(x.Items[1]-Math.Sqr(x.Items[0]))
-                });
+            });
         }
 
         private static IntervalMatrix HessRosenbrock(IntervalVector x)
         {
             return new IntervalMatrix(new[,]
-           {
+            {
                 { 1200*Math.Sqr(x.Items[0])-400*x.Items[1]+2 , -400*x.Items[0] },
                 {  -400*x.Items[0], Interval.FromDoublePrecise(200) }
             });
