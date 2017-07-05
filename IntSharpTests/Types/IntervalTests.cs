@@ -2,6 +2,7 @@
 using IntSharp;
 using IntSharp.Types;
 using NUnit.Framework;
+using Math = IntSharp.Math;
 
 namespace IntSharpTests.Types
 {
@@ -368,6 +369,23 @@ namespace IntSharpTests.Types
 
             var result = interval*vector;
             Assert.AreEqual(result.Items[0],vector.Items[0]*interval);
+        }
+
+        [Test]
+        public void TestPropagationOfErrorExample()
+        {
+            // Init interval with MidRad factory
+            var height = Interval.FromMidRad(3.8, 0.2);
+
+            // Init interval with InfSup factory
+            var accelerationOfGravity = Interval.FromInfSup(9.8, 9.82);
+
+            // Calculate the result
+            var velocity = Math.Sqrt(2 * height * accelerationOfGravity);
+
+            // Assert if result is rigorously bounded
+            var expectedVelocity = Interval.FromInfSup(8.4, 8.863);
+            Assert.True(expectedVelocity.Subset(velocity));
         }
     }
 }
