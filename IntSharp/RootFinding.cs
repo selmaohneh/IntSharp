@@ -36,7 +36,6 @@ namespace IntSharp
             var z = f(Interval.FromDoublePrecise(xs));
             z = -r*z;
             
-            // Todo: maybe add stop criterium depening on number of iterations.
             while (true)
             {
                 if (y.Equals(lastY)) throw new Exception("Root could not be found. The iteration does not converge.");

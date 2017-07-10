@@ -33,8 +33,7 @@ namespace IntSharp.LinearEquationSystem
             var x = z;
             
             var lastX = IntervalVector.Entire(1);
-
-            // Todo: maybe add break criterium depending on number of iterations.
+            
             while (true)
             {
                 var y = x.EpsilonInflation();
