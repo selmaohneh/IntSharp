@@ -21,7 +21,7 @@ apt-get install mono-complete nuget
 * Use the [NuGet](https://www.nuget.org/) package mangager to obtain the remaining dependencies
 [MathNet.Numerics](https://www.nuget.org/packages/MathNet.Numerics/3.19.0),
 [NUnit](https://www.nuget.org/packages/NUnit/3.7.1), and
-[NUnit](https://www.nuget.org/packages/NUnit.Console/3.6.1):
+[NUnit.Console](https://www.nuget.org/packages/NUnit.Console/3.6.1):
 
 
 ```
