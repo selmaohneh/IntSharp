@@ -9,7 +9,7 @@ namespace IntSharpTests.LinearEquationSystem
     internal class OverDeterminedTests
     {
         [Test]
-        public void TestOverDeterminedSolving1()
+        public void TestOverDeterminedSolvingWithNarrowIntervals()
         {
             var aItems = new[,]
             {
@@ -42,15 +42,12 @@ namespace IntSharpTests.LinearEquationSystem
             var slope = result.Items[0];
             var intercept = result.Items[1];
 
-            Assert.AreEqual(1, slope.Infimum, 0.00001);
-            Assert.AreEqual(1, slope.Supremum, 0.00001);
-
-            Assert.AreEqual(0, intercept.Infimum, 0.00001);
-            Assert.AreEqual(0, intercept.Supremum, 0.00001);
+            Assert.IsTrue(slope.In(1));
+            Assert.IsTrue(intercept.In(0));
         }
 
         [Test]
-        public void TestOverDeterminedSolving2()
+        public void TestOverDeterminedSolvingWithBuggedIntervals()
         {
             var aItems = new[,]
             {

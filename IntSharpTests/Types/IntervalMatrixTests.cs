@@ -539,5 +539,22 @@ namespace IntSharpTests.Types
             Assert.IsTrue(m.IsConcave());
 
         }
+
+        [Test]
+        public void TestInterior()
+        {
+            var i1 = Interval.FromInfSup(1, 2);
+            var lhs = new IntervalMatrix(new [,]{{ i1, i1},{ i1 , i1}});
+
+            var i2 = Interval.FromInfSup(1, 1.9);
+            var rhs = new IntervalMatrix(new[,] { { i2, i2 }, { i2, i2 } });
+
+            Assert.IsFalse(lhs.Interior(rhs));
+
+            var i3 = Interval.FromInfSup(0.9, 2.1);
+            rhs = new IntervalMatrix(new[,] { { i3, i3 }, { i3, i3 } });
+
+            Assert.IsTrue(lhs.Interior(rhs));
+        }
     }
 }

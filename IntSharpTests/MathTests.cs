@@ -31,7 +31,7 @@ namespace IntSharpTests
             Assert.AreEqual(res.Infimum, 0);
             Assert.AreEqual(res.Supremum, double.PositiveInfinity);
         }
-        
+
         [Test]
         public void TestCos()
         {
@@ -50,13 +50,51 @@ namespace IntSharpTests
             Assert.AreEqual(res.Infimum, -1, 0.0001);
             Assert.AreEqual(res.Supremum, 0.2836, 0.0001);
 
-            i = Interval.FromInfSup(5*Math.PI, 10*Math.PI);
+            i = Interval.FromInfSup(5 * Math.PI, 10 * Math.PI);
             res = IntSharp.Math.Cos(i);
             Assert.AreEqual(res.Infimum, -1);
             Assert.AreEqual(res.Supremum, 1);
 
-            i = Interval.FromInfSup(5*Math.PI, 6*Math.PI);
-            Assert.Throws<Exception>(()=> IntSharp.Math.Cos(i));
+            i = Interval.FromInfSup(5 * Math.PI, 6 * Math.PI);
+            Assert.Throws<Exception>(() => IntSharp.Math.Cos(i));
+        }
+
+        [Test]
+        public void TestIntervalCosinus()
+        {
+            var i1 = Interval.FromInfSup(0, 1);
+            var i2 = Interval.FromInfSup(0, 1.8);
+
+            var v = new IntervalVector(new[] { i1, i2 });
+
+            var res = IntSharp.Math.Cos(v);
+
+            Assert.AreEqual(res.Items[0].Infimum, 0.5403, 0.0001);
+            Assert.AreEqual(res.Items[0].Supremum, 1, 0.0001);
+
+            Assert.AreEqual(res.Items[1].Infimum, -0.2272, 0.0001);
+            Assert.AreEqual(res.Items[1].Supremum, 1, 0.0001);
+        }
+
+        [Test]
+        public void TestMatrixCosinus()
+        {
+            var i1 = Interval.FromInfSup(0, 1);
+            var i2 = Interval.FromInfSup(0, 1.8);
+
+            var m = new IntervalMatrix(new[,] { { i1, i2 }, { i2, i1 } });
+
+            var res = IntSharp.Math.Cos(m);
+
+            Assert.AreEqual(res.Items[0,0].Infimum, 0.5403, 0.0001);
+            Assert.AreEqual(res.Items[0, 0].Supremum, 1, 0.0001);
+            Assert.AreEqual(res.Items[1, 1].Infimum, 0.5403, 0.0001);
+            Assert.AreEqual(res.Items[1, 1].Supremum, 1, 0.0001);
+
+            Assert.AreEqual(res.Items[0,1].Infimum, -0.2272, 0.0001);
+            Assert.AreEqual(res.Items[0,1].Supremum, 1, 0.0001);
+            Assert.AreEqual(res.Items[1, 0].Infimum, -0.2272, 0.0001);
+            Assert.AreEqual(res.Items[1, 0].Supremum, 1, 0.0001);
         }
 
         [Test]
@@ -65,7 +103,7 @@ namespace IntSharpTests
             var i = Interval.FromInfSup(-3, 7);
             var res = IntSharp.Math.Exp(i);
             Assert.AreEqual(0.0497, res.Infimum, 0.0001);
-            Assert.AreEqual(1096.633,res.Supremum, 0.001);
+            Assert.AreEqual(1096.633, res.Supremum, 0.001);
         }
 
         [Test]
@@ -73,15 +111,15 @@ namespace IntSharpTests
         {
             var i = Interval.FromInfSup(3, 7);
 
-            var res = IntSharp.Math.Log(i,2);
+            var res = IntSharp.Math.Log(i, 2);
             Assert.AreEqual(1.584, res.Infimum, 0.001);
-            Assert.AreEqual(2.807,res.Supremum, 0.001);
+            Assert.AreEqual(2.807, res.Supremum, 0.001);
 
             res = IntSharp.Math.Log(i, 10);
-            Assert.AreEqual(0.477,res.Infimum, 0.001);
-            Assert.AreEqual(0.845,res.Supremum, 0.001);
+            Assert.AreEqual(0.477, res.Infimum, 0.001);
+            Assert.AreEqual(0.845, res.Supremum, 0.001);
         }
-        
+
         [Test]
         public void TestPown()
         {
@@ -136,7 +174,7 @@ namespace IntSharpTests
             Assert.AreEqual(9, res.Infimum, 0.001);
             Assert.AreEqual(49, res.Supremum, 0.001);
         }
-        
+
         [Test]
         public void SqrtTest()
         {
