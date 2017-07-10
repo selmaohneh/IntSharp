@@ -1,6 +1,6 @@
 # IntSharp
 
-A rigorous interval arithmetic library for .NET 
+A rigorous interval arithmetic library for .NET
 
 # Quickstart for [Mono](http://www.mono-project.com/) (Linux)
 
