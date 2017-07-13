@@ -2,6 +2,84 @@
 
 A rigorous interval arithmetic library for .NET
 
+# Sample usage
+
+This section will give some examples on how to use IntSharp. For further, advanced functions of IntSharp, it is
+recommended to study the corresponding unit tests. They cover almost every aspect of
+the implementation and give insights on how to use specific features.
+
+* Create intervals with one of the several factory methods and calculate with them:
+
+```
+var i1 = Interval.FromInfSup(3.2,7); // [3.2 , 7]
+var i2 = Interval.FromMidRad(4.8,2.2); // [2.6 , 7]
+var i3 = Interval.FromDoublePrecise(9.34); // [9.34 , 9.34]
+
+var res = (i1 * i2 + i3) / 2;
+```
+
+* Make verified calculations with included error propagation. No approximations, no derivations.
+
+```
+// Init interval with MidRad factory
+var height = Interval.FromMidRad(3.8, 0.2);
+
+// Init interval with InfSup factory
+var accelerationOfGravity = Interval.FromInfSup(9.8, 9.82);
+
+// Calculate the verified result
+var velocity = Math.Sqrt(2 * height * accelerationOfGravity);
+// = [8.4 , 8.863]
+```
+
+* Solve determined or overdetermined linear equation systems and obtain verified results:
+
+```
+// Init items for the matrix A.
+var aItems = new[,]
+{
+    {Interval.FromMidRad(2,0.2), Interval.FromDoublePrecise(1)},
+    {Interval.FromMidRad(7,0.2), Interval.FromDoublePrecise(1)}
+};
+
+// Init items for the rhs vector b.
+var bItems = new[]
+{
+    Interval.FromMidRad(4,0.2),
+    Interval.FromMidRad(1,0.2)
+};
+
+// Init matrix A and vector b.
+var a = new IntervalMatrix(aItems);
+var b = new IntervalVector(bItems);
+
+// Solve the system with or withought error weighing:
+var result = LinearEquationSystem.Solve(a, b);
+```
+
+Find verified enclosures of a function's root:
+
+```
+private static Interval MyTestFunction(Interval x)
+{
+    return 2 * Math.Pown(x, 3) - 9;
+}
+
+private static Interval MyTestDerivative(Interval x)
+{
+    return 6 * Math.Pown(x, 2);
+}
+
+public void FindTestRoot()
+{
+    var myTestRange = Interval.FromInfSup(0, 100);
+    var root = RootFinding.FindRoot(
+        MyTestFunction, 
+        MyTestDerivative,
+        myTestRange);
+}
+```
+
 # Quickstart for [Mono](http://www.mono-project.com/) (Linux)
 
 * Clone or download IntSharp and change to it's root directory
