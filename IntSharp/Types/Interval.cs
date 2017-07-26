@@ -11,7 +11,7 @@ namespace IntSharp.Types
     /// <summary>
     /// Base type for the whole library
     /// </summary>
-    public struct Interval
+    public struct Interval : IEquatable<object>, IComparable<Interval>
     {
         /// <summary>
         /// Lower bound of the interval.
@@ -108,7 +108,18 @@ namespace IntSharp.Types
 
             return FromDoublePrecise(value).EpsilonInflation();
         }
-        
+
+        /// <summary>
+        /// Standard IComparable implementation.
+        /// </summary>
+        public int CompareTo(Interval other)
+        {
+            if (this < other) return -1;
+            if (this > other) return 1;
+
+            return 0;
+        }
+
         public override string ToString()
         {
             return ToString(IntervalFormat.MidRad);
@@ -126,25 +137,31 @@ namespace IntSharp.Types
                 return format.Equals(IntervalFormat.InfSup)
                     ? $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]"
                     : $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
-            
-            return RoundVerified(decimalDigits.Value).ToString(format);
-        }
 
-        /// <summary>
-        /// Rounds the interval rigorously to the given amount of digits.
-        /// </summary>
-        public Interval RoundVerified(int decimalDigits)
-        {
-            // Get the inflatedinterval.
-            var inflationValue = System.Math.Pow(10, -decimalDigits);
-            var inflatedInterval = FromInfSup(Infimum - inflationValue, Supremum + inflationValue);
+            
+            var inflationValue = System.Math.Pow(10, -decimalDigits.Value);
+
+            if (format == IntervalFormat.InfSup)
+            {
+                // Get the inflated values
+                var inflatedInfimum = Infimum - inflationValue;
+                var inflatedSupremum = Supremum + inflationValue;
+
+                // Round to given decimal digits.
+                var roundedInfimum = System.Math.Round(inflatedInfimum, decimalDigits.Value);
+                var roundedSupremum = System.Math.Round(inflatedSupremum, decimalDigits.Value);
+
+                return FromInfSup(roundedInfimum, roundedSupremum).ToString(format);
+            }
+
+            // Get the inflated values
+            var inflatedRadius = this.Rad() + inflationValue;
 
             // Round to given decimal digits.
-            var roundedInfimum = System.Math.Round(inflatedInterval.Infimum, decimalDigits);
-            var roundedSupremum = System.Math.Round(inflatedInterval.Supremum, decimalDigits);
-            var roundedInterval = FromInfSup(roundedInfimum, roundedSupremum);
+            var roundedRadius = System.Math.Round(inflatedRadius, decimalDigits.Value);
+            var roundedMid = System.Math.Round(this.Mid(), decimalDigits.Value);
 
-            return roundedInterval;
+            return FromMidRad(roundedMid, roundedRadius).ToString(format);
         }
 
         /// <summary>
@@ -166,6 +183,7 @@ namespace IntSharp.Types
         {
             return new { Inf = Infimum, Sup = Supremum }.GetHashCode();
         }
+        
 
         // Todo: add missing operators.
         public static Interval operator +(Interval lhs, Interval rhs)

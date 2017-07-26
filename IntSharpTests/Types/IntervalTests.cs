@@ -103,19 +103,9 @@ namespace IntSharpTests.Types
             Assert.AreEqual(expected, res);
 
             res = i.ToString(IntervalFormat.MidRad, 2);
-            expected = Interval.FromInfSup(-9.89, 1.24).ToString(IntervalFormat.MidRad);
+            expected = Interval.FromMidRad(-4.32, 5.57).ToString(IntervalFormat.MidRad);
             Assert.AreEqual(expected, res);
 
-        }
-
-        [Test]
-        public void RoundVerifiedTest()
-        {
-            var i = Interval.FromInfSup(-9.8765, 1.2345);
-            var res = i.RoundVerified(2);
-
-            var expected = Interval.FromInfSup(-9.89, 1.24);
-            Assert.AreEqual(expected,res);
         }
 
         [Test]
@@ -142,7 +132,22 @@ namespace IntSharpTests.Types
             rhs = Interval.FromInfSup(-0, 0);
             Assert.IsTrue(lhs.Equals(rhs));
         }
-        
+
+        [Test]
+        public void CompareTest()
+        {
+            var i1 = Interval.FromInfSup(3, 5);
+
+            var i2 = Interval.FromInfSup(1, 2);
+            Assert.AreEqual(1, i1.CompareTo(i2));
+
+            i2 = Interval.FromInfSup(6, 8);
+            Assert.AreEqual(-1, i1.CompareTo(i2));
+
+            i2 = Interval.FromInfSup(4, 7);
+            Assert.AreEqual(0, i1.CompareTo(i2));
+        }
+
         [Test]
         public void IntervalSmallerIntervalTest()
         {
