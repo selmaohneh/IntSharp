@@ -151,7 +151,8 @@ namespace IntSharp.Types
                 var roundedInfimum = System.Math.Round(inflatedInfimum, decimalDigits.Value);
                 var roundedSupremum = System.Math.Round(inflatedSupremum, decimalDigits.Value);
 
-                return FromInfSup(roundedInfimum, roundedSupremum).ToString(format);
+                return $"[ {roundedInfimum.ToString(CultureInfo.InvariantCulture)} , " +
+                       $"{roundedSupremum.ToString(CultureInfo.InvariantCulture)} ]";
             }
 
             // Get the inflated values
@@ -161,7 +162,8 @@ namespace IntSharp.Types
             var roundedRadius = System.Math.Round(inflatedRadius, decimalDigits.Value);
             var roundedMid = System.Math.Round(this.Mid(), decimalDigits.Value);
 
-            return FromMidRad(roundedMid, roundedRadius).ToString(format);
+            return $"< {roundedMid.ToString(CultureInfo.InvariantCulture)} , " +
+                   $"{roundedRadius.ToString(CultureInfo.InvariantCulture)} >";
         }
 
         /// <summary>
