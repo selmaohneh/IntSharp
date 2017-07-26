@@ -76,7 +76,7 @@ namespace IntSharp.Types
 
         /// <summary>
         /// Factory using a single double.
-        /// If the desired number has more than 15 significant digits use "FromDoubleWithInflation" instead to prevent
+        /// If the desired number has more than 15 significant digits use "FromDoubleWithEpsilonInflation" instead to prevent
         /// a rounding error. This guarantees a rigorous enclosure.
         /// </summary>
         public static Interval FromDoublePrecise(double value)
@@ -97,7 +97,7 @@ namespace IntSharp.Types
         /// instead to get a smaller enclosure. This method should only be used to prevent rounding errors due to 
         /// numbers containig more than 15 significant digits. 
         /// </summary>
-        public static Interval FromDoubleWithInflation(double value)
+        public static Interval FromDoubleWithEpsilonInflation(double value)
         {
             // Filter infinity.
             if (double.IsPositiveInfinity(value)) throw new Exception("[ +inf , +inf ] is an invalid interval.");
@@ -106,7 +106,7 @@ namespace IntSharp.Types
             // Filter NaN.
             if (double.IsNaN(value)) throw new Exception("[ double.NaN , double.NaN ] is an invalid interval.");
 
-            return FromInfSup(value.InflateDown(),value.InflateUp());
+            return FromDoublePrecise(value).EpsilonInflation();
         }
         
         public override string ToString()

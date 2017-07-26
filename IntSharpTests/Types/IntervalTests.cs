@@ -73,14 +73,14 @@ namespace IntSharpTests.Types
         public void FromDoubleWithInflationTest()
         {
             // filter inifity
-            Assert.Throws<Exception>(() => Interval.FromDoubleWithInflation(double.PositiveInfinity));
-            Assert.Throws<Exception>(() => Interval.FromDoubleWithInflation(double.NegativeInfinity));
+            Assert.Throws<Exception>(() => Interval.FromDoubleWithEpsilonInflation(double.PositiveInfinity));
+            Assert.Throws<Exception>(() => Interval.FromDoubleWithEpsilonInflation(double.NegativeInfinity));
 
             // filter NaN
-            Assert.Throws<Exception>(() => Interval.FromDoubleWithInflation(double.NaN));
+            Assert.Throws<Exception>(() => Interval.FromDoubleWithEpsilonInflation(double.NaN));
 
             // valid call
-            var i = Interval.FromDoubleWithInflation(2);
+            var i = Interval.FromDoubleWithEpsilonInflation(2);
             Assert.Greater(i.Supremum,2);
             Assert.Less(i.Infimum,2);
         }
