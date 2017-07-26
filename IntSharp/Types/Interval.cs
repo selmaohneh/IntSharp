@@ -113,11 +113,30 @@ namespace IntSharp.Types
         {
             return ToString(IntervalFormat.MidRad);
         }
-        public string ToString(IntervalFormat format)
+
+        /// <summary>
+        /// Plots the interval in the given format and the given number of decimal digits.
+        /// Use decimal digits = null (default) if you do not want to cut any digit. This
+        /// allows maximum precision.
+        /// </summary>
+        public string ToString(IntervalFormat format, int? decimalDigits = null)
         {
-            return format.Equals(IntervalFormat.InfSup)
-                ? $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]"
-                : $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
+            // No inflation needed.
+            if (decimalDigits == null)
+                return format.Equals(IntervalFormat.InfSup)
+                    ? $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]"
+                    : $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
+
+            // Get the inflatedinterval.
+            var inflationValue = System.Math.Pow(10, -decimalDigits.Value);
+            var inflatedInterval = FromInfSup(Infimum - inflationValue, Supremum + inflationValue);
+
+            // Round to given decimal digits.
+            var roundedInfimum = System.Math.Round(inflatedInterval.Infimum, decimalDigits.Value);
+            var roundedSupremum = System.Math.Round(inflatedInterval.Supremum, decimalDigits.Value);
+            var roundedInterval = FromInfSup(roundedInfimum, roundedSupremum);
+
+            return roundedInterval.ToString(format);
         }
 
         /// <summary>

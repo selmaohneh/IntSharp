@@ -94,6 +94,16 @@ namespace IntSharpTests.Types
         }
 
         [Test]
+        public void ToStringWithDecimalDigitsTest()
+        {
+            var i = Interval.FromInfSup(-9.8765, 1.2345);
+            var res = i.ToString(IntervalFormat.InfSup, 2);
+
+            Assert.AreEqual("[ -9.89 , 1.24 ]", res);
+
+        }
+
+        [Test]
         public void EqualsTest()
         {
             // not equal if wrong type
