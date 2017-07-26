@@ -126,17 +126,25 @@ namespace IntSharp.Types
                 return format.Equals(IntervalFormat.InfSup)
                     ? $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]"
                     : $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
+            
+            return RoundVerified(decimalDigits.Value).ToString(format);
+        }
 
+        /// <summary>
+        /// Rounds the interval rigorously to the given amount of digits.
+        /// </summary>
+        public Interval RoundVerified(int decimalDigits)
+        {
             // Get the inflatedinterval.
-            var inflationValue = System.Math.Pow(10, -decimalDigits.Value);
+            var inflationValue = System.Math.Pow(10, -decimalDigits);
             var inflatedInterval = FromInfSup(Infimum - inflationValue, Supremum + inflationValue);
 
             // Round to given decimal digits.
-            var roundedInfimum = System.Math.Round(inflatedInterval.Infimum, decimalDigits.Value);
-            var roundedSupremum = System.Math.Round(inflatedInterval.Supremum, decimalDigits.Value);
+            var roundedInfimum = System.Math.Round(inflatedInterval.Infimum, decimalDigits);
+            var roundedSupremum = System.Math.Round(inflatedInterval.Supremum, decimalDigits);
             var roundedInterval = FromInfSup(roundedInfimum, roundedSupremum);
 
-            return roundedInterval.ToString(format);
+            return roundedInterval;
         }
 
         /// <summary>

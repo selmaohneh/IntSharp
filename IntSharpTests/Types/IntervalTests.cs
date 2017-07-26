@@ -97,10 +97,25 @@ namespace IntSharpTests.Types
         public void ToStringWithDecimalDigitsTest()
         {
             var i = Interval.FromInfSup(-9.8765, 1.2345);
+
             var res = i.ToString(IntervalFormat.InfSup, 2);
+            var expected = Interval.FromInfSup(-9.89, 1.24).ToString(IntervalFormat.InfSup);
+            Assert.AreEqual(expected, res);
 
-            Assert.AreEqual("[ -9.89 , 1.24 ]", res);
+            res = i.ToString(IntervalFormat.MidRad, 2);
+            expected = Interval.FromInfSup(-9.89, 1.24).ToString(IntervalFormat.MidRad);
+            Assert.AreEqual(expected, res);
 
+        }
+
+        [Test]
+        public void RoundVerifiedTest()
+        {
+            var i = Interval.FromInfSup(-9.8765, 1.2345);
+            var res = i.RoundVerified(2);
+
+            var expected = Interval.FromInfSup(-9.89, 1.24);
+            Assert.AreEqual(expected,res);
         }
 
         [Test]
