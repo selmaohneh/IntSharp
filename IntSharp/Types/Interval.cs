@@ -54,7 +54,7 @@ namespace IntSharp.Types
             if (double.IsNaN(sup)) throw new Exception("double.NaN is an invalid supremum.");
 
             return new Interval(inf, sup);
-        }        
+        }
 
         /// <summary>
         /// Factory using mid and radius.
@@ -65,7 +65,7 @@ namespace IntSharp.Types
             if (rad < 0) throw new Exception("A negative radius is invalid.");
 
             // Filter infinite mid.
-            if(double.IsInfinity(mid)) throw new Exception("An infinite mid is invalid.");
+            if (double.IsInfinity(mid)) throw new Exception("An infinite mid is invalid.");
 
             // Filter NaN.
             if (double.IsNaN(mid)) throw new Exception("double.NaN is an invalid mid.");
@@ -134,11 +134,26 @@ namespace IntSharp.Types
         {
             // No inflation needed.
             if (decimalDigits == null)
-                return format.Equals(IntervalFormat.InfSup)
-                    ? $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]"
-                    : $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
+            {
+                switch (format)
+                {
+                    case IntervalFormat.InfSup:
+                        return
+                            $"[ {Infimum.ToString(CultureInfo.InvariantCulture)} , {Supremum.ToString(CultureInfo.InvariantCulture)} ]";
 
-            
+                    case IntervalFormat.MidRad:
+                        return
+                            $"< {this.Mid().ToString(CultureInfo.InvariantCulture)} , {this.Rad().ToString(CultureInfo.InvariantCulture)} >";
+
+                    case IntervalFormat.ValDev:
+                        return
+                            $"{this.Mid().ToString(CultureInfo.InvariantCulture)} ± {this.Rad().ToString(CultureInfo.InvariantCulture)}";
+
+                    default:
+                        throw new Exception("Interval format does not exist.");
+                }
+            }
+
             var inflationValue = System.Math.Pow(10, -decimalDigits.Value);
 
             if (format == IntervalFormat.InfSup)
@@ -162,8 +177,14 @@ namespace IntSharp.Types
             var roundedRadius = System.Math.Round(inflatedRadius, decimalDigits.Value);
             var roundedMid = System.Math.Round(this.Mid(), decimalDigits.Value);
 
-            return $"< {roundedMid.ToString(CultureInfo.InvariantCulture)} , " +
-                   $"{roundedRadius.ToString(CultureInfo.InvariantCulture)} >";
+            if (format == IntervalFormat.MidRad)
+            {
+                return $"< {roundedMid.ToString(CultureInfo.InvariantCulture)} , " +
+                       $"{roundedRadius.ToString(CultureInfo.InvariantCulture)} >";
+            }
+
+            return $"{roundedMid.ToString(CultureInfo.InvariantCulture)} ± " +
+                          $"{roundedRadius.ToString(CultureInfo.InvariantCulture)}";
         }
 
         /// <summary>
@@ -185,7 +206,7 @@ namespace IntSharp.Types
         {
             return new { Inf = Infimum, Sup = Supremum }.GetHashCode();
         }
-        
+
 
         // Todo: add missing operators.
         public static Interval operator +(Interval lhs, Interval rhs)
@@ -194,7 +215,7 @@ namespace IntSharp.Types
             var sup = (lhs.Supremum + rhs.Supremum).InflateUp();
 
             return FromInfSup(inf, sup);
-        }    
+        }
         public static Interval operator +(Interval lhs, double rhs)
         {
             var intervalRhs = FromDoublePrecise(rhs);
@@ -252,7 +273,7 @@ namespace IntSharp.Types
             var items = new Interval[rhs.RowCount];
             for (var row = 0; row < rhs.RowCount; row++)
             {
-                items[row] = lhs*rhs.Items[row];
+                items[row] = lhs * rhs.Items[row];
             }
 
             return new IntervalVector(items);
@@ -378,7 +399,7 @@ namespace IntSharp.Types
         /// </summary>
         public static Interval ThreeHalfPi => FromInfSup(4.71238898038468, 4.71238898038469);
     }
-    
+
     public enum IntervalFormat
     {
         /// <summary>
@@ -388,6 +409,10 @@ namespace IntSharp.Types
         /// <summary>
         /// &lt; mid, radius >
         /// </summary>
-        MidRad
+        MidRad,
+        /// <summary>
+        /// mid ± radius
+        /// </summary>
+        ValDev
     }
 }

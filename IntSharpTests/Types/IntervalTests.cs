@@ -91,9 +91,7 @@ namespace IntSharpTests.Types
             var i = Interval.FromInfSup(-2, 2);
             Assert.AreEqual("[ -2 , 2 ]", i.ToString(IntervalFormat.InfSup));
             Assert.AreEqual("< 0 , 2 >", i.ToString(IntervalFormat.MidRad));
-
-            i = Interval.FromMidRad(27.0678475913995, 0.610875042096556);
-            Assert.AreEqual("< 27.068 , 0.612 >", i.ToString(IntervalFormat.MidRad,3));
+            Assert.AreEqual("0 ± 2", i.ToString(IntervalFormat.ValDev));
         }
 
         [Test]
@@ -107,6 +105,10 @@ namespace IntSharpTests.Types
 
             res = i.ToString(IntervalFormat.MidRad, 2);
             expected = Interval.FromMidRad(-4.32, 5.57).ToString(IntervalFormat.MidRad);
+            Assert.AreEqual(expected, res);
+
+            res = i.ToString(IntervalFormat.ValDev, 2);
+            expected = Interval.FromMidRad(-4.32, 5.57).ToString(IntervalFormat.ValDev);
             Assert.AreEqual(expected, res);
 
         }
