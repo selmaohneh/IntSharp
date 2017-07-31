@@ -90,7 +90,7 @@ namespace IntSharp
 
                     // Check tolerance criterion for current minimum.
                     var minimum = Interval.FromInfSup(subBoxInfimum, minimumSupremum);
-                    if (minimum.Diam() <= epsilon || subBox.Items.All(item => item.Diam() <= epsilon) || todoList.Count == 0 && doneList.Count == 0)
+                    if (minimum.Diam() <= epsilon || subBox.Items.All(item => item.Diam() <= epsilon))
                     {
                         doneList.Add(new Tuple<IntervalVector, double>(subBox, subBoxInfimum));
                         doneList = doneList.OrderBy(item => item.Item2).ToList();
